@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import simpledialog, messagebox
 from SistemaInventario import Estoque
-from tkinter.ttk import Treeview
+from tkinter.ttk import Treeview, Scrollbar
 import datetime
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -48,24 +48,31 @@ class InterfaceGrafica:
         self.button_produtos_estoque_baixo = tk.Button(root, text="Produtos com Estoque Baixo", command=self.produtos_estoque_baixo)
         self.button_produtos_estoque_baixo.pack()
 
+        self.button_produtos_estoque_baixo = tk.Button(root, text="Buscar Produtos por Nome", command=self.buscar_produtos_por_nome)
+        self.button_produtos_estoque_baixo.pack()
+
     def cadastrar_produto(self):
-        nome_produto = simpledialog.askstring("Cadastrar Produto", "Nome do produto:")
-        data_compra = simpledialog.askstring("Cadastrar Produto", "Data de compra (AAAA-MM-DD):")
-        data_validade = simpledialog.askstring("Cadastrar Produto", "Data de validade (AAAA-MM-DD):")
-        preco = float(simpledialog.askstring("Cadastrar Produto", "Preço:"))
-        descricao = simpledialog.askstring("Cadastrar Produto", "Descrição:")
-        estoque_inicial = int(simpledialog.askstring("Cadastrar Produto", "Estoque Inicial:"))
-        
-        if nome_produto and data_compra and data_validade:
-            try:
-                data_compra = datetime.datetime.strptime(data_compra, "%Y-%m-%d").date()
-                data_validade = datetime.datetime.strptime(data_validade, "%Y-%m-%d").date()
-                self.estoque.cadastro_produto(nome_produto, data_compra, data_validade, preco, descricao, estoque_inicial)
-                messagebox.showinfo("Sucesso", f"Produto {nome_produto} cadastrado com sucesso.")
-            except ValueError:
-                messagebox.showerror("Erro", "Data em formato inválido.")
-        else:
-            messagebox.showerror("Erro", "Nome, data de compra e data de validade são obrigatórios.")
+        num_produtos = int(simpledialog.askstring("Cadastrar Produto", "Quantos produtos deseja cadastrar?"))
+
+        for i in range(num_produtos):
+            id_produto = int(simpledialog.askstring("Cadastrar Produto", "ID do produto:"))
+            nome_produto = simpledialog.askstring("Cadastrar Produto", "Nome do produto:")
+            data_compra = simpledialog.askstring("Cadastrar Produto", "Data de compra (AAAA-MM-DD):")
+            data_validade = simpledialog.askstring("Cadastrar Produto", "Data de validade (AAAA-MM-DD):")
+            preco = float(simpledialog.askstring("Cadastrar Produto", "Preço:"))
+            descricao = simpledialog.askstring("Cadastrar Produto", "Descrição:")
+            estoque_inicial = int(simpledialog.askstring("Cadastrar Produto", "Estoque Inicial:"))
+
+            if nome_produto and data_compra and data_validade:
+                try:
+                    data_compra = datetime.datetime.strptime(data_compra, "%Y-%m-%d").date()
+                    data_validade = datetime.datetime.strptime(data_validade, "%Y-%m-%d").date()
+                    self.estoque.cadastro_produto(id_produto, nome_produto, data_compra, data_validade, preco, descricao, estoque_inicial)
+                    messagebox.showinfo("Sucesso", f"Produto {nome_produto} cadastrado com sucesso. ID: {id_produto}")
+                except ValueError:
+                    messagebox.showerror("Erro", "Data em formato inválido.")
+            else:
+                messagebox.showerror("Erro", "Nome, data de compra e data de validade são obrigatórios.")
 
     def cadastrar_fornecedor(self):
         nome_fornecedor = simpledialog.askstring("Cadastrar Fornecedor", "Nome do fornecedor:")
@@ -131,6 +138,7 @@ class InterfaceGrafica:
 
     def ver_tabela_produtos(self):
         produtos = self.estoque.consultar_produtos_com_fornecedores()
+        self.mostrar_tabela_scrollable("Tabela de Produtos Cadastrados", produtos)
 
         if not produtos:
             messagebox.showinfo("Tabela de Produtos Cadastrados", "Nenhum produto cadastrado.")
@@ -156,6 +164,7 @@ class InterfaceGrafica:
 
     def ver_tabela_fornecedores(self):
         fornecedores = self.estoque.consultar_fornecedores()
+        self.mostrar_tabela_scrollable("Tabela de Fornecedores Cadastrados", fornecedores)
 
         if not fornecedores:
             messagebox.showinfo("Tabela de Fornecedores Cadastrados", "Nenhum fornecedor cadastrado.")
@@ -178,6 +187,7 @@ class InterfaceGrafica:
 
     def produtos_vencidos(self):
         produtos_vencidos = self.estoque.produtos_vencidos()
+        self.mostrar_tabela_scrollable("Produtos Vencidos", produtos_vencidos)
 
         if not produtos_vencidos:
             messagebox.showinfo("Produtos Vencidos", "Nenhum produto vencido encontrado.")
@@ -191,10 +201,8 @@ class InterfaceGrafica:
 
     def produtos_estoque_baixo(self):
         estoque_minimo = simpledialog.askinteger("Produtos com Estoque Baixo", "Estoque mínimo desejado:")
-
         if estoque_minimo is not None:
             produtos_estoque_baixo = self.estoque.produtos_estoque_baixo(estoque_minimo)
-            
             if not produtos_estoque_baixo:
                 messagebox.showinfo("Produtos com Estoque Baixo", "Nenhum produto com estoque baixo encontrado.")
             else:
@@ -214,9 +222,62 @@ class InterfaceGrafica:
         for produto in produtos_estoque_baixo:
             treeview.insert("", "end", values=(produto['ID_Produtos'], produto['Nome'], produto['Estoque']))
 
+    def buscar_produtos_por_nome(self):
+        substring = simpledialog.askstring("Buscar Produtos por Nome", "Substring do Nome do Produto:")
+        if substring:
+            print(f"Chamando self.estoque.buscar_produtos_por_nome com substring: {substring}")
+            produtos_encontrados = self.estoque.buscar_produtos_por_nome(substring)
+            if produtos_encontrados is not None:
+                if produtos_encontrados:
+                    self.mostrar_tabela_produtos_por_nome(produtos_encontrados, f"Produtos com a substring '{substring}' no nome")
+                else:
+                    messagebox.showinfo("Produtos Encontrados", f"Nenhum produto encontrado com a substring '{substring}' no nome.")
+            else:
+                messagebox.showerror("Erro", "Ocorreu um problema ao buscar os produtos.")
+        else:
+            messagebox.showerror("Erro", "Substring do nome do produto é obrigatória.")
+
+    def mostrar_tabela_produtos_por_nome(self, produtos, titulo):
+        window = tk.Toplevel()
+        window.title(titulo)
+
+        treeview = Treeview(window, columns=("ID_Produtos", "Nome", "Data de Compra", "Validade", "Preço", "Descrição"))
+        treeview.heading("#1", text="ID")
+        treeview.heading("#2", text="Nome")
+        treeview.heading("#3", text="Data de Compra")
+        treeview.heading("#4", text="Validade")
+        treeview.heading("#5", text="Preço")
+        treeview.heading("#6", text="Descrição")
+        treeview.pack()
+
+        for produto in produtos:
+            treeview.insert("", "end", values=(
+                produto[0],  # ID
+                produto[1],  # Nome
+                produto[2],  # Data de Compra
+                produto[3],  # Validade
+                produto[4],  # Preço
+                produto[5]  # Descrição
+            ))
+
+    def mostrar_tabela_scrollable(self, titulo, dados):
+        window = tk.Toplevel()
+        window.title(titulo)
+
+        text = tk.Text(window, wrap='none', width=200, height=100)
+        text.pack(side=tk.LEFT, fill=tk.Y)
+        scrollbar = Scrollbar(window, command=text.yview)
+        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        text.config(yscrollcommand=scrollbar.set)
+
+        for item in dados:
+            text.insert(tk.END, item)
+            text.insert(tk.END, "\n\n")
+
 def main():
     root = tk.Tk()
     app = InterfaceGrafica(root)
+    app.buscar_produtos_por_nome
     root.mainloop()
 
 if __name__ == '__main__':
