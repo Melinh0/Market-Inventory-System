@@ -84,25 +84,37 @@ class Estoque(object):
                     self.fornecedores[fornecedor_id]['produtos_vinculados'] = []
                 self.fornecedores[fornecedor_id]['produtos_vinculados'].append(produto_id)
 
-    def cadastro_produto(self, id_produto, nome_produto, data_compra, data_validade, preco, descricao, estoque_inicial):
+    def cadastro_produto(self):
         cursor = self.conn.cursor()
 
-        cursor.execute('''
-            INSERT INTO produtos (ID_Produtos, Nome, DataCompra, Validade, Preco, Descricao, Estoque)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
-        ''', (id_produto, nome_produto, data_compra, data_validade, preco, descricao, estoque_inicial))
+        num_produtos = int(input('Quantos produtos deseja cadastrar? '))
 
-        self.conn.commit()
-        self.produtos[id_produto] = {
-            'ID_Produtos': id_produto,  
-            'Nome': nome_produto,
-            'DataCompra': data_compra,
-            'Validade': data_validade,
-            'Preco': preco,
-            'Descricao': descricao,
-            'Estoque': estoque_inicial
-        }
-        print(f'Produto {nome_produto} cadastrado com sucesso. ID: {id_produto}')
+        for i in range(num_produtos):
+            id_produto = int(input('ID do produto: '))
+            nome_produto = input('Nome do produto: ')
+            data_compra = input('Data de compra (AAAA-MM-DD): ')
+            data_validade = input('Data de validade (AAAA-MM-DD): ')
+            preco = float(input('Preço: '))
+            descricao = input('Descrição: ')
+            estoque_inicial = int(input('Estoque Inicial: '))
+
+            cursor.execute('''
+                INSERT INTO produtos (ID_Produtos, Nome, DataCompra, Validade, Preco, Descricao, Estoque)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            ''', (id_produto, nome_produto, data_compra, data_validade, preco, descricao, estoque_inicial))
+
+            self.conn.commit()
+            self.produtos[id_produto] = {
+                'ID_Produtos': id_produto,
+                'Nome': nome_produto,
+                'DataCompra': data_compra,
+                'Validade': data_validade,
+                'Preco': preco,
+                'Descricao': descricao,
+                'Estoque': estoque_inicial
+            }
+            print(f'Produto {nome_produto} cadastrado com sucesso. ID: {id_produto}')
+        print(f'{num_produtos} produtos cadastrados com sucesso.')
 
     def cadastrar_fornecedor(self, fornecedor):
         cursor = self.conn.cursor()
@@ -307,6 +319,19 @@ class Estoque(object):
             print('Nenhum produto com estoque baixo encontrado.')
             return []
 
+    def buscar_produtos_por_nome(self, substring):
+        cursor = self.conn.cursor()
+        cursor.execute('SELECT * FROM produtos WHERE Nome LIKE ?', (f'%{substring}%',))
+        produtos_encontrados = cursor.fetchall()
+        if produtos_encontrados:
+            df_produtos = pd.DataFrame(produtos_encontrados, columns=["ID_Produtos", "Nome", "DataCompra", "Validade", "Preco", "Descricao", "Estoque"])
+            print(f'Produtos com a substring "{substring}" no nome:')
+            print(df_produtos)
+            return produtos_encontrados  
+        else:
+            print(f'Nenhum produto encontrado com a substring "{substring}" no nome.')
+            return None   
+
 if __name__ == '__main__':
     estoque = Estoque()
 
@@ -323,20 +348,14 @@ if __name__ == '__main__':
         9 - Ver Tabela dos Fornecedores Cadastrados
         10 - Produtos Vencidos
         11 - Produtos com Estoque Baixo
-        12 - Sair
+        12 - Buscar Produtos por Nome                  
+        13 - Sair
         >>> '''))
 
         os.system('cls')
 
         if opcao == 1:
-            id_produto = int(input('ID do produto: '))
-            nome_produto = input('Nome do produto: ')
-            data_compra = input('Data de compra (AAAA-MM-DD): ')
-            data_validade = input('Data de validade (AAAA-MM-DD): ')
-            preco = float(input('Preço: '))
-            descricao = input('Descrição: ')
-            estoque_inicial = int(input('Estoque Inicial: '))
-            estoque.cadastro_produto(id_produto, nome_produto, data_compra, data_validade, preco, descricao, estoque_inicial)
+            estoque.cadastro_produto()
         elif opcao == 2:
             id_fornecedor = int(input('ID do fornecedor: '))
             nome_fornecedor = input('Nome do fornecedor: ')
@@ -392,5 +411,8 @@ if __name__ == '__main__':
             else:
                 print('Nenhum produto com estoque baixo encontrado.')
         elif opcao == 12:
+            substring = input('Digite a substring que deseja buscar nos nomes dos produtos: ')
+            estoque.buscar_produtos_por_nome(substring)        
+        elif opcao == 13:
             estoque.conn.close()
             sys.exit(0)
