@@ -235,31 +235,27 @@ class Estoque(object):
     def consultar_fornecedores(self):
         cursor = self.conn.cursor()
         cursor.execute('''
-            SELECT f.ID_Fornecedor, f.Nome, f.Endereco, f.Contato, pf.ProdutoID
+            SELECT f.ID_Fornecedor, f.Nome, f.Endereco, f.Contato, GROUP_CONCAT(pf.ProdutoID) AS Produtos
             FROM fornecedores f
             LEFT JOIN produtos_fornecedores pf ON f.ID_Fornecedor = pf.FornecedorID
+            GROUP BY f.ID_Fornecedor
         ''')
         dados = cursor.fetchall()
 
-        fornecedores = {}
+        fornecedores = []
 
         for dado in dados:
-            id_fornecedor = dado[0]
-            nome_fornecedor = dado[1]
-            endereco_fornecedor = dado[2]
-            contato_fornecedor = dado[3]
-            id_produto = dado[4]
+            id_fornecedor, nome_fornecedor, endereco_fornecedor, contato_fornecedor, produtos_str = dado
 
-            if id_fornecedor not in fornecedores:
-                fornecedores[id_fornecedor] = {
-                    'Nome': nome_fornecedor,
-                    'Endereco': endereco_fornecedor,
-                    'Contato': contato_fornecedor,
-                    'Produtos': []
-                }
+            fornecedor = {
+                'ID_Fornecedor': id_fornecedor,
+                'Nome': nome_fornecedor,
+                'Endereco': endereco_fornecedor,
+                'Contato': contato_fornecedor,
+                'Produtos': [int(pid) for pid in produtos_str.split(',')] if produtos_str else []
+            }
 
-            if id_produto is not None:
-                fornecedores[id_fornecedor]['Produtos'].append(id_produto)
+            fornecedores.append(fornecedor)
 
         return fornecedores
 
