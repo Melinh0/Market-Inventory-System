@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import simpledialog, messagebox
+from tkinter import simpledialog, messagebox, filedialog, ttk
 from SistemaInventario import Estoque
 from tkinter.ttk import Treeview, Scrollbar
 import datetime
@@ -39,8 +39,14 @@ class InterfaceGrafica:
         self.button_ver_tabela_produtos = tk.Button(root, text="Ver Tabela de Produtos Cadastrados", command=self.ver_tabela_produtos)
         self.button_ver_tabela_produtos.pack()
 
+        self.button_baixar_tabela_produtos = tk.Button(root, text="Baixar Tabela de Produtos (Excel)", command=self.baixar_tabela_produtos)
+        self.button_baixar_tabela_produtos.pack()
+
         self.button_ver_tabela_fornecedores = tk.Button(root, text="Ver Tabela de Fornecedores Cadastrados", command=self.ver_tabela_fornecedores)
         self.button_ver_tabela_fornecedores.pack()
+
+        self.button_baixar_tabela_fornecedores = tk.Button(root, text="Baixar Tabela de Fornecedores (Excel)", command=self.baixar_tabela_fornecedores)
+        self.button_baixar_tabela_fornecedores.pack()
 
         self.button_produtos_vencidos = tk.Button(root, text="Produtos Vencidos", command=self.produtos_vencidos)
         self.button_produtos_vencidos.pack()
@@ -75,17 +81,19 @@ class InterfaceGrafica:
                 messagebox.showerror("Erro", "Nome, data de compra e data de validade são obrigatórios.")
 
     def cadastrar_fornecedor(self):
+        id_fornecedor = int(simpledialog.askstring("Cadastrar Fornecedor", "ID do fornecedor:"))
         nome_fornecedor = simpledialog.askstring("Cadastrar Fornecedor", "Nome do fornecedor:")
         endereco_fornecedor = simpledialog.askstring("Cadastrar Fornecedor", "Endereço do fornecedor:")
         contato_fornecedor = simpledialog.askstring("Cadastrar Fornecedor", "Contato do fornecedor:")
 
         if nome_fornecedor:
             fornecedor = {
+                'ID_Fornecedor': id_fornecedor,
                 'Nome': nome_fornecedor,
                 'Endereco': endereco_fornecedor,
                 'Contato': contato_fornecedor
             }
-            self.estoque.cadastro_fornecedor(fornecedor)
+            self.estoque.cadastrar_fornecedor(fornecedor)
             messagebox.showinfo("Sucesso", f"Fornecedor {nome_fornecedor} cadastrado com sucesso.")
         else:
             messagebox.showerror("Erro", "Nome do fornecedor é obrigatório.")
@@ -144,60 +152,59 @@ class InterfaceGrafica:
             messagebox.showinfo("Tabela de Produtos Cadastrados", "Nenhum produto cadastrado.")
             return
 
-        result = "Tabela de Produtos Cadastrados:\n\n"
-        for produto in produtos:
-            result += f"ID: {produto['ID_Produtos']}\n"
-            result += f"Produto: {produto['Nome']}\n"
-            result += f"Data de Compra: {produto['DataCompra']}\n"
-            result += f"Validade: {produto['Validade']}\n"
-            result += f"Preço: {produto['Preco']}\n"
-            result += f"Descrição: {produto['Descricao']}\n"
-            result += f"Estoque: {produto['Estoque']}\n"
-            if produto['Fornecedores']:
-                fornecedores_nomes = [self.estoque.fornecedores.get(fid, {}).get('Nome') for fid in produto['Fornecedores']]
-                result += f"Fornecedores: {', '.join(fornecedores_nomes)}\n"
-            else:
-                result += "Fornecedores: Nenhum fornecedor vinculado\n"
-            result += "\n"
+    def baixar_tabela_produtos(self):
+            produtos = self.estoque.consultar_produtos_com_fornecedores()
+            if not produtos:
+                messagebox.showinfo("Tabela de Produtos Cadastrados", "Nenhum produto cadastrado.")
+                return
 
-        messagebox.showinfo("Tabela de Produtos Cadastrados", result)
+            df_produtos = pd.DataFrame(produtos)
+
+            file_path = tk.filedialog.asksaveasfilename(defaultextension=".xlsx", filetypes=[("Excel files", "*.xlsx")])
+
+            if file_path:
+                df_produtos.to_excel(file_path, index=False)
+                messagebox.showinfo("Tabela de Produtos Cadastrados", f"Arquivo Excel salvo em: {file_path}")
 
     def ver_tabela_fornecedores(self):
-        fornecedores = self.estoque.consultar_fornecedores()
-        self.mostrar_tabela_scrollable("Tabela de Fornecedores Cadastrados", fornecedores)
+            fornecedores = self.estoque.consultar_fornecedores()
+            if not fornecedores:
+                messagebox.showinfo("Tabela de Fornecedores Cadastrados", "Nenhum fornecedor cadastrado.")
+                return
 
+            self.mostrar_tabela_scrollable("Tabela de Fornecedores Cadastrados", fornecedores)
+
+    def baixar_tabela_fornecedores(self):
+        fornecedores = self.estoque.consultar_fornecedores()
         if not fornecedores:
-            messagebox.showinfo("Tabela de Fornecedores Cadastrados", "Nenhum fornecedor cadastrado.")
+            messagebox.showinfo("Baixar Tabela de Fornecedores", "Nenhum fornecedor disponível.")
             return
 
-        result = "Tabela de Fornecedores Cadastrados:\n\n"
-        for id_fornecedor, fornecedor_data in fornecedores.items():
-            result += f"ID: {id_fornecedor}\n"
-            result += f"Nome: {fornecedor_data['Nome']}\n"
-            result += f"Endereco: {fornecedor_data['Endereco']}\n"
-            result += f"Contato: {fornecedor_data['Contato']}\n"
+        df_fornecedores = pd.DataFrame(fornecedores)
 
-            if 'Produtos' in fornecedor_data and fornecedor_data['Produtos']:
-                result += f"Produtos vinculados: {', '.join(map(str, fornecedor_data['Produtos']))}\n"
-            else:
-                result += "Produtos vinculados: Nenhum produto vinculado\n"
-            result += "\n"
+        file_path = tk.filedialog.asksaveasfilename(defaultextension=".xlsx", filetypes=[("Excel files", "*.xlsx")])
 
-        messagebox.showinfo("Tabela de Fornecedores Cadastrados", result)
+        if file_path:
+            df_fornecedores.to_excel(file_path, index=False)
+            messagebox.showinfo("Tabela de Fornecedores Cadastrados", f"Arquivo Excel salvo em: {file_path}")
 
     def produtos_vencidos(self):
         produtos_vencidos = self.estoque.produtos_vencidos()
-        self.mostrar_tabela_scrollable("Produtos Vencidos", produtos_vencidos)
 
         if not produtos_vencidos:
             messagebox.showinfo("Produtos Vencidos", "Nenhum produto vencido encontrado.")
-        else:
-            result = "Produtos Vencidos:\n\n"
-            for produto in produtos_vencidos:
-                result += f"ID: {produto[0]}\n"
-                result += f"Nome: {produto[1]}\n"
-                result += f"Data de Validade: {produto[2]}\n\n"
-            messagebox.showinfo("Produtos Vencidos", result)
+            return
+
+        window = tk.Toplevel()
+        window.title("Produtos Vencidos")
+        treeview = ttk.Treeview(window, columns=("ID", "Nome", "Data de Validade"))
+        treeview.heading("#1", text="ID")
+        treeview.heading("#2", text="Nome")
+        treeview.heading("#3", text="Data de Validade")
+        treeview.pack()
+
+        for produto in produtos_vencidos:
+            treeview.insert("", "end", values=(produto[0], produto[1], produto[2]))
 
     def produtos_estoque_baixo(self):
         estoque_minimo = simpledialog.askinteger("Produtos com Estoque Baixo", "Estoque mínimo desejado:")
@@ -252,27 +259,40 @@ class InterfaceGrafica:
 
         for produto in produtos:
             treeview.insert("", "end", values=(
-                produto[0],  # ID
-                produto[1],  # Nome
-                produto[2],  # Data de Compra
-                produto[3],  # Validade
-                produto[4],  # Preço
-                produto[5]  # Descrição
+                produto[0],  
+                produto[1], 
+                produto[2],  
+                produto[3],  
+                produto[4],  
+                produto[5]  
             ))
 
     def mostrar_tabela_scrollable(self, titulo, dados):
         window = tk.Toplevel()
         window.title(titulo)
 
-        text = tk.Text(window, wrap='none', width=200, height=100)
-        text.pack(side=tk.LEFT, fill=tk.Y)
-        scrollbar = Scrollbar(window, command=text.yview)
-        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
-        text.config(yscrollcommand=scrollbar.set)
+        if not dados or not dados[0]:
+            messagebox.showinfo(titulo, "Nenhum dado disponível para exibir.")
+            return
 
-        for item in dados:
-            text.insert(tk.END, item)
-            text.insert(tk.END, "\n\n")
+        treeview = ttk.Treeview(window, columns=list(dados[0].keys()), show="headings")
+
+        for col in dados[0].keys():
+            treeview.heading(col, text=col)
+            treeview.column(col, anchor=tk.CENTER)
+
+        for row in dados:
+            treeview.insert("", "end", values=list(row.values()))
+
+        horizontal_scrollbar = tk.Scrollbar(window, orient="horizontal", command=treeview.xview)
+        horizontal_scrollbar.pack(side=tk.BOTTOM, fill=tk.X)
+        treeview.configure(xscrollcommand=horizontal_scrollbar.set)
+
+        scrollbar = tk.Scrollbar(window, command=treeview.yview)
+        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        treeview.config(yscrollcommand=scrollbar.set)
+
+        treeview.pack(expand=tk.YES, fill=tk.BOTH)
 
 def main():
     root = tk.Tk()
