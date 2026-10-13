@@ -7,7 +7,14 @@ venv/
 staticfiles/
 .pytest_cache/
 .coverage
+.coverage.*
 htmlcov/
+.mypy_cache/
+.ruff_cache/
+build/
+dist/
+*.egg/
+pip-wheel-metadata/
 
 # Banco de dados local
 db.sqlite3
@@ -18,8 +25,31 @@ node_modules/
 frontend/dist/
 .vite/
 
+# Testes / Cobertura
+coverage/
+*.cover
+.tox/
+.nox/
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# Arquivos de mídia (se usado)
+media/
+
+# Segredos / chaves
+*.pem
+*.key
+secrets.py
+local_settings.py
+
+# Docker override local
+docker-compose.override.yml
+
 # Ambiente e editores
 .env
+.env.local
 .idea/
 .vscode/
 *.log
