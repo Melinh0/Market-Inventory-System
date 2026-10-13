@@ -1,0 +1,31 @@
+[project]
+name = "market-inventory-system"
+version = "2.0.0"
+description = "Sistema de gestão de estoque de mercado - Django + React"
+readme = "README.md"
+license = { file = "LICENSE" }
+authors = [{ name = "Yago Melo" }]
+requires-python = ">=3.10"
+keywords = ["estoque", "inventario", "django", "react", "mercado"]
+dependencies = [
+    "django>=5.0",
+    "whitenoise>=6.6",
+    "gunicorn>=22.0",
+    "psycopg[binary]>=3.1",
+]
+
+[project.scripts]
+market-inventory = "backend.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/yagom/Market-Inventory-System"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["backend"]
+
+[dependency-groups]
+dev = []
