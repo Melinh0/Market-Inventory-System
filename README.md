@@ -29,6 +29,18 @@ e exportação em CSV. Substitui o protótipo legado em Tkinter/SQLite presente 
 | Frontend | React 18, Vite 5, Recharts                 |
 | Tooling  | Docker Compose, uv (Python), npm (frontend)|
 
+## Capturas de tela
+
+| Dashboard | Produtos |
+|-----------|----------|
+| ![Dashboard](docs/images/dashboard.svg) | ![Produtos](docs/images/products.svg) |
+
+| Fornecedores | Alertas |
+|--------------|---------|
+| ![Fornecedores](docs/images/suppliers.svg) | ![Alertas](docs/images/alerts.svg) |
+
+> **Para usar screenshots reais:** substitua os arquivos `.svg` em `docs/images/` por capturas reais (`dashboard.png`, `products.png`, `suppliers.png`, `alerts.png`), tiradas com Win+Shift+S (Windows) ou Cmd+Shift+4 (macOS) enquanto o app roda em <http://localhost:8000>.
+
 ## Estrutura do projeto
 
 ```
@@ -43,6 +55,8 @@ e exportação em CSV. Substitui o protótipo legado em Tkinter/SQLite presente 
 │       ├── components/          # Dashboard, Products, Suppliers, Alerts, Modal
 │       ├── api.js
 │       └── App.jsx
+├── docs/
+│   └── images/                  # screenshots para o README
 ├── legacy/                      # protótipo original (Tkinter + SQLite)
 ├── Dockerfile                   # imagem única: API + frontend buildado
 ├── docker-compose.yml           # web + PostgreSQL 16

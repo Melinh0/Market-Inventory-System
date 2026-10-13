@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760">
+  <rect width="1200" height="760" fill="#0f172a"/>
+  <rect width="1200" height="64" fill="#1e293b"/>
+  <rect x="24" y="16" width="48" height="32" rx="8" fill="#22d3ee"/>
+  <text x="48" y="38" font-family="system-ui" font-size="18" font-weight="bold" fill="#0f172a" text-anchor="middle">MI</text>
+  <text x="88" y="30" font-family="system-ui" font-size="16" font-weight="bold" fill="#f1f5f9">Market Inventory System</text>
+  <text x="88" y="48" font-family="system-ui" font-size="12" fill="#94a3b8">Gestão de estoque de mercado</text>
+  <g font-family="system-ui" font-size="13" fill="#94a3b8">
+    <rect x="760" y="18" width="90" height="30" rx="8" fill="#1e293b"/>
+    <text x="805" y="38" text-anchor="middle">Dashboard</text>
+    <rect x="858" y="18" width="90" height="30" rx="8" fill="#22d3ee"/>
+    <text x="903" y="38" fill="#0f172a" font-weight="bold" text-anchor="middle">Produtos</text>
+    <rect x="956" y="18" width="100" height="30" rx="8" fill="#1e293b"/>
+    <text x="1006" y="38" text-anchor="middle">Fornecedores</text>
+    <rect x="1064" y="18" width="90" height="30" rx="8" fill="#1e293b"/>
+    <text x="1109" y="38" text-anchor="middle">Alertas</text>
+    <circle cx="1145" cy="24" r="8" fill="#ef4444"/>
+    <text x="1145" y="28" font-size="10" fill="#fff" text-anchor="middle">4</text>
+  </g>
+  <rect x="24" y="84" width="1152" height="48" rx="8" fill="#1e293b"/>
+  <rect x="40" y="96" width="280" height="24" rx="6" fill="#0f172a"/>
+  <text x="52" y="112" font-family="system-ui" font-size="12" fill="#64748b">Buscar produto pelo nome...</text>
+  <rect x="332" y="96" width="160" height="24" rx="6" fill="#0f172a"/>
+  <text x="344" y="112" font-family="system-ui" font-size="12" fill="#94a3b8">Todas as situações ▾</text>
+  <rect x="1016" y="96" width="72" height="24" rx="6" fill="#1e293b" stroke="#334155"/>
+  <text x="1052" y="112" font-family="system-ui" font-size="12" fill="#94a3b8" text-anchor="middle">Exportar</text>
+  <rect x="1096" y="96" width="64" height="24" rx="6" fill="#22d3ee"/>
+  <text x="1128" y="112" font-family="system-ui" font-size="12" font-weight="bold" fill="#0f172a" text-anchor="middle">+ Novo</text>
+  <rect x="24" y="148" width="1152" height="560" rx="10" fill="#1e293b"/>
+  <g font-family="system-ui" font-size="12" font-weight="bold" fill="#94a3b8">
+    <text x="40" y="176">ID</text>
+    <text x="100" y="176">Produto</text>
+    <text x="360" y="176">Categoria</text>
+    <text x="500" y="176">Validade</text>
+    <text x="700" y="176">Preço</text>
+    <text x="820" y="176">Estoque</text>
+    <text x="940" y="176">Fornecedores</text>
+    <text x="1100" y="176">Ações</text>
+  </g>
+  <line x1="24" y1="188" x2="1176" y2="188" stroke="#334155"/>
+  <g font-family="system-ui" font-size="12" fill="#f1f5f9">
+    <text x="40" y="216">219</text>
+    <text x="100" y="216">Sabão em pó Omo</text>
+    <text x="100" y="232" font-size="10" fill="#64748b">Desengordura roupas</text>
+    <rect x="360" y="202" width="70" height="20" rx="10" fill="#334155"/>
+    <text x="395" y="216" font-size="11" fill="#94a3b8" text-anchor="middle">limpeza</text>
+    <rect x="500" y="202" width="70" height="20" rx="10" fill="#ef4444"/>
+    <text x="535" y="216" font-size="11" fill="#fff" text-anchor="middle">Vencido</text>
+    <text x="700" y="216">R$ 5,00</text>
+    <text x="820" y="216" fill="#facc15">5 un.</text>
+    <rect x="940" y="202" width="90" height="20" rx="10" fill="#334155"/>
+    <text x="985" y="216" font-size="11" fill="#94a3b8" text-anchor="middle">Lucas ✕</text>
+    <rect x="1040" y="202" width="30" height="20" rx="4" fill="#22d3ee"/>
+    <text x="1055" y="216" font-size="10" fill="#0f172a" text-anchor="middle">Edit</text>
+    <rect x="1076" y="202" width="36" height="20" rx="4" fill="#ef4444"/>
+    <text x="1094" y="216" font-size="10" fill="#fff" text-anchor="middle">Del</text>
+  </g>
+  <line x1="24" y1="248" x2="1176" y2="248" stroke="#334155"/>
+  <g font-family="system-ui" font-size="12" fill="#f1f5f9">
+    <text x="40" y="276">232</text>
+    <text x="100" y="276">Banana prata (kg)</text>
+    <rect x="360" y="262" width="70" height="20" rx="10" fill="#334155"/>
+    <text x="395" y="276" font-size="11" fill="#94a3b8" text-anchor="middle">alimento</text>
+    <rect x="500" y="262" width="70" height="20" rx="10" fill="#facc15"/>
+    <text x="535" y="276" font-size="11" fill="#0f172a" text-anchor="middle">A vencer</text>
+    <text x="700" y="276">R$ 3,00</text>
+    <text x="820" y="276">8 un.</text>
+    <rect x="940" y="262" width="90" height="20" rx="10" fill="#334155"/>
+    <text x="985" y="276" font-size="11" fill="#94a3b8" text-anchor="middle">Yago ✕</text>
+  </g>
+  <line x1="24" y1="308" x2="1176" y2="308" stroke="#334155"/>
+  <g font-family="system-ui" font-size="12" fill="#f1f5f9">
+    <text x="40" y="336">333</text>
+    <text x="100" y="336">Manga rosa (kg)</text>
+    <rect x="500" y="322" width="70" height="20" rx="10" fill="#facc15"/>
+    <text x="535" y="336" font-size="11" fill="#0f172a" text-anchor="middle">A vencer</text>
+    <text x="700" y="336">R$ 3,00</text>
+    <text x="820" y="336">10 un.</text>
+    <rect x="940" y="322" width="90" height="20" rx="10" fill="#334155"/>
+    <text x="985" y="336" font-size="11" fill="#94a3b8" text-anchor="middle">Mauro ✕</text>
+  </g>
+  <line x1="24" y1="368" x2="1176" y2="368" stroke="#334155"/>
+  <g font-family="system-ui" font-size="12" fill="#f1f5f9">
+    <text x="40" y="396">410</text>
+    <text x="100" y="396">Chocolate Cacau Show 90g</text>
+    <rect x="500" y="382" width="70" height="20" rx="10" fill="#22c55e"/>
+    <text x="535" y="396" font-size="11" fill="#fff" text-anchor="middle">No prazo</text>
+    <text x="700" y="396">R$ 10,50</text>
+    <text x="820" y="396">50 un.</text>
+    <rect x="940" y="382" width="90" height="20" rx="10" fill="#334155"/>
+    <text x="985" y="396" font-size="11" fill="#94a3b8" text-anchor="middle">Yago ✕</text>
+  </g>
+  <text x="24" y="730" font-family="system-ui" font-size="11" fill="#475569">Preview — substituir por screenshot real em docs/images/products.png</text>
+</svg>

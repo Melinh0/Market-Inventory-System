@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760">
+  <rect width="1200" height="760" fill="#0f172a"/>
+  <rect width="1200" height="64" fill="#1e293b"/>
+  <rect x="24" y="16" width="48" height="32" rx="8" fill="#22d3ee"/>
+  <text x="48" y="38" font-family="system-ui" font-size="18" font-weight="bold" fill="#0f172a" text-anchor="middle">MI</text>
+  <text x="88" y="30" font-family="system-ui" font-size="16" font-weight="bold" fill="#f1f5f9">Market Inventory System</text>
+  <text x="88" y="48" font-family="system-ui" font-size="12" fill="#94a3b8">Gestão de estoque de mercado</text>
+  <g font-family="system-ui" font-size="13" fill="#94a3b8">
+    <rect x="760" y="18" width="90" height="30" rx="8" fill="#1e293b"/>
+    <text x="805" y="38" text-anchor="middle">Dashboard</text>
+    <rect x="858" y="18" width="90" height="30" rx="8" fill="#1e293b"/>
+    <text x="903" y="38" text-anchor="middle">Produtos</text>
+    <rect x="956" y="18" width="100" height="30" rx="8" fill="#22d3ee"/>
+    <text x="1006" y="38" fill="#0f172a" font-weight="bold" text-anchor="middle">Fornecedores</text>
+    <rect x="1064" y="18" width="90" height="30" rx="8" fill="#1e293b"/>
+    <text x="1109" y="38" text-anchor="middle">Alertas</text>
+    <circle cx="1145" cy="24" r="8" fill="#ef4444"/>
+    <text x="1145" y="28" font-size="10" fill="#fff" text-anchor="middle">4</text>
+  </g>
+  <rect x="24" y="84" width="1152" height="48" rx="8" fill="#1e293b"/>
+  <text x="40" y="112" font-family="system-ui" font-size="13" fill="#94a3b8">3 fornecedores cadastrados</text>
+  <rect x="1016" y="96" width="72" height="24" rx="6" fill="#1e293b" stroke="#334155"/>
+  <text x="1052" y="112" font-family="system-ui" font-size="12" fill="#94a3b8" text-anchor="middle">Exportar</text>
+  <rect x="1096" y="96" width="64" height="24" rx="6" fill="#22d3ee"/>
+  <text x="1128" y="112" font-family="system-ui" font-size="12" font-weight="bold" fill="#0f172a" text-anchor="middle">+ Novo</text>
+  <rect x="24" y="148" width="1152" height="420" rx="10" fill="#1e293b"/>
+  <g font-family="system-ui" font-size="12" font-weight="bold" fill="#94a3b8">
+    <text x="40" y="176">ID</text>
+    <text x="120" y="176">Nome</text>
+    <text x="400" y="176">Endereço</text>
+    <text x="640" y="176">Contato</text>
+    <text x="820" y="176">Produtos vinculados</text>
+    <text x="1100" y="176">Ações</text>
+  </g>
+  <line x1="24" y1="188" x2="1176" y2="188" stroke="#334155"/>
+  <g font-family="system-ui" font-size="12" fill="#f1f5f9">
+    <text x="40" y="220">111</text>
+    <text x="120" y="220" font-weight="bold">Lucas</text>
+    <text x="400" y="220">Rua 7, 120 - Centro</text>
+    <text x="640" y="220">(85) 8888-1111</text>
+    <rect x="820" y="206" width="90" height="20" rx="10" fill="#334155"/>
+    <text x="865" y="220" font-size="11" fill="#94a3b8" text-anchor="middle">Sabão em pó</text>
+    <rect x="916" y="206" width="90" height="20" rx="10" fill="#334155"/>
+    <text x="961" y="220" font-size="11" fill="#94a3b8" text-anchor="middle">Pera</text>
+    <rect x="1012" y="206" width="60" height="20" rx="10" fill="#334155"/>
+    <text x="1042" y="220" font-size="11" fill="#94a3b8" text-anchor="middle">Abacate</text>
+    <rect x="1096" y="206" width="30" height="20" rx="4" fill="#22d3ee"/>
+    <text x="1111" y="220" font-size="10" fill="#0f172a" text-anchor="middle">Edit</text>
+    <rect x="1132" y="206" width="36" height="20" rx="4" fill="#ef4444"/>
+    <text x="1150" y="220" font-size="10" fill="#fff" text-anchor="middle">Del</text>
+  </g>
+  <line x1="24" y1="252" x2="1176" y2="252" stroke="#334155"/>
+  <g font-family="system-ui" font-size="12" fill="#f1f5f9">
+    <text x="40" y="284">777</text>
+    <text x="120" y="284" font-weight="bold">Yago</text>
+    <text x="400" y="284">Rua UECE, s/n</text>
+    <text x="640" y="284">(85) 7777-6666</text>
+    <rect x="820" y="270" width="110" height="20" rx="10" fill="#334155"/>
+    <text x="875" y="284" font-size="11" fill="#94a3b8" text-anchor="middle">Cebola</text>
+    <rect x="936" y="270" width="120" height="20" rx="10" fill="#334155"/>
+    <text x="996" y="284" font-size="11" fill="#94a3b8" text-anchor="middle">Chocolate Cacau</text>
+    <rect x="1062" y="270" width="110" height="20" rx="10" fill="#334155"/>
+    <text x="1117" y="284" font-size="11" fill="#94a3b8" text-anchor="middle">Banana prata</text>
+  </g>
+  <line x1="24" y1="316" x2="1176" y2="316" stroke="#334155"/>
+  <g font-family="system-ui" font-size="12" fill="#f1f5f9">
+    <text x="40" y="348">888</text>
+    <text x="120" y="348" font-weight="bold">Mauro</text>
+    <text x="400" y="348">Rua 3, 45 - Mercado</text>
+    <text x="640" y="348">(85) 4444-5555</text>
+    <rect x="820" y="334" width="90" height="20" rx="10" fill="#334155"/>
+    <text x="865" y="348" font-size="11" fill="#94a3b8" text-anchor="middle">Manga rosa</text>
+    <rect x="916" y="334" width="90" height="20" rx="10" fill="#334155"/>
+    <text x="961" y="348" font-size="11" fill="#94a3b8" text-anchor="middle">Detergente</text>
+  </g>
+  <line x1="24" y1="380" x2="1176" y2="380" stroke="#334155"/>
+  <text x="24" y="596" font-family="system-ui" font-size="12" fill="#64748b">Total de 13 produtos no catálogo.</text>
+  <text x="24" y="730" font-family="system-ui" font-size="11" fill="#475569">Preview — substituir por screenshot real em docs/images/suppliers.png</text>
+</svg>
