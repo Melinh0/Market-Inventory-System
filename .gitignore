@@ -55,3 +55,6 @@ docker-compose.override.yml
 *.log
 Thumbs.db
 .DS_Store
+
+# Pastas vazias / geradas
+scripts/
